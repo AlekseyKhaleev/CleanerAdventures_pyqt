@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/battery.png</file>
+        <file>images/en_0.png</file>
+        <file>images/en_10.png</file>
+        <file>images/en_30.png</file>
+        <file>images/en_50.png</file>
+        <file>images/en_70.png</file>
+        <file>images/en_80.png</file>
+        <file>images/en_90.png</file>
+        <file>images/target.png</file>
+        <file>images/VC_gr_dn.png</file>
+        <file>images/VC_gr_lt.png</file>
+        <file>images/VC_gr_rt.png</file>
+        <file>images/VC_gr_up.png</file>
+        <file>images/VC_rd_dn.png</file>
+        <file>images/VC_rd_lt.png</file>
+        <file>images/VC_rd_rt.png</file>
+        <file>images/VC_rd_up.png</file>
+        <file>images/VC_wt_dn.png</file>
+        <file>images/VC_wt_lt.png</file>
+        <file>images/VC_wt_rt.png</file>
+        <file>images/VC_wt_up.png</file>
+        <file>images/VC_yw_dn.png</file>
+        <file>images/VC_yw_lt.png</file>
+        <file>images/VC_yw_rt.png</file>
+        <file>images/VC_yw_up.png</file>
+    </qresource>
+</RCC>
