@@ -3,6 +3,7 @@ from dataclasses import dataclass, field
 from PyQt6.QtCore import pyqtSignal, pyqtSlot, QPoint, QObject, QTime
 from PyQt6.QtGui import QGuiApplication
 from collections import deque
+from copy import deepcopy
 import random
 
 
@@ -72,17 +73,15 @@ class MazeModel(QObject):
     # private section
     def __init_field_size(self):
         rec = QGuiApplication.primaryScreen().size()
-        self.__model.fieldWidth = rec.width() / self.__model.DOT_SIDE
-        self.__model.fieldHeight = rec.height() * 0.8 / self.__model.DOT_SIDE
+        self.__model.fieldWidth = int(rec.width() / self.__model.DOT_SIDE)
+        self.__model.fieldHeight = int((rec.height() * 0.8) / self.__model.DOT_SIDE)
 
     def __init_default_maze_map(self):
         self.__model.cells.clear()
         self.__model.walls.clear()
-        dot = QPoint()
         for y in range(self.__model.fieldHeight):
             for x in range(self.__model.fieldWidth):
-                dot.setX(x)
-                dot.setY(y)
+                dot = QPoint(x, y)
                 if (x % 2 != 0 and y % 2 != 0) and (
                         y < self.__model.fieldHeight - 1 and x < self.__model.fieldWidth - 1):
                     self.__model.cells.add(dot)
@@ -99,14 +98,14 @@ class MazeModel(QObject):
             neighbours = self.__get_maze_neighbours(current, cells)
             if neighbours:
                 next_p = neighbours[random.randrange(len(neighbours))]
-                way.append(current)
+                way.append(deepcopy(current))
                 to_del = QPoint(current)
                 if current.y() == next_p.y():
                     to_del.setX(current.x() + ((next_p.x() - current.x()) // (abs(next_p.x() - current.x()))))
                 else:
                     to_del.setY(current.y() + ((next_p.y() - current.y()) // (abs(next_p.y() - current.y()))))
                 self.__model.walls.remove(to_del)
-                self.__model.cells.add(to_del)
+                self.__model.cells.add(deepcopy(to_del))
                 current = next_p
                 cells.remove(current)
             elif way:
@@ -153,10 +152,11 @@ class MazeModel(QObject):
         cur_neighbours = deque()
 
         def check_next(nx: int, ny: int):
+            nonlocal cur_neighbours, current
             current.setX(current.x() + nx)
             current.setY(current.y() + ny)
             if current in cells:
-                cur_neighbours.append(current)
+                cur_neighbours.append(deepcopy(current))
 
         for x, y in zip((2, -4, 2, 0), (0, 0, 2, -4)):
             check_next(x, y)
