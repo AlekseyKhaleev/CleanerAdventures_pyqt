@@ -16,12 +16,12 @@ class Menu:
 
 class MenuWidget(QWidget):
     # signals
-    returnClicked = pyqtSignal(button=Menu.RETURN)
-    newGameClicked = pyqtSignal(button=Menu.NEW_GAME)
-    controlsClicked = pyqtSignal(button=Menu.CONTROLS)
-    highscoresClicked = pyqtSignal(button=Menu.HIGHSCORES)
-    aboutClicked = pyqtSignal(button=Menu.ABOUT)
-    exitClicked = pyqtSignal(button=Menu.EXIT)
+    returnClicked = pyqtSignal(int)
+    newGameClicked = pyqtSignal(int)
+    controlsClicked = pyqtSignal(int)
+    highscoresClicked = pyqtSignal(int)
+    aboutClicked = pyqtSignal(int)
+    exitClicked = pyqtSignal(int)
 
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
@@ -50,7 +50,7 @@ class MenuWidget(QWidget):
     # slots
     def keyPressEvent(self, event):
         if event.key() == Qt.Key.Key_Escape:
-            self.returnClicked().emit()
+            self.returnClicked.emit(Menu.RETURN)
 
     @staticmethod
     def create_button(text):

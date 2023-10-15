@@ -4,7 +4,7 @@ from PyQt6.QtCore import pyqtSignal, Qt
 
 class AuthWidget(QWidget):
     # signals
-    nameChanged = pyqtSignal(name="")
+    nameChanged = pyqtSignal(str)
 
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
@@ -24,5 +24,5 @@ class AuthWidget(QWidget):
 
     # slots
     def __changeName__(self):
-        self.nameChanged(self.__auth.text()).emit()
+        self.nameChanged.emit(self.__auth.text())
         self.__auth.clear()

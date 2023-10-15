@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 
-from PyQt6.QtCore import pyqtSignal, QPoint, QObject, QTime
+from PyQt6.QtCore import pyqtSignal, pyqtSlot, QPoint, QObject, QTime
 from PyQt6.QtGui import QGuiApplication
 from collections import deque
 import random
@@ -32,19 +32,23 @@ class MazeModel(QObject):
         self.init_maze()
 
     # public slots
-    def add_battery(self, value):
+    @pyqtSlot(QPoint)
+    def add_battery(self, value: QPoint):
         self.__model.batteries.append(value)
-        self.modelChanged(self.__model).emit()
+        self.modelChanged.emit(self.__model)
 
-    def del_battery(self, value):
+    @pyqtSlot(QPoint)
+    def del_battery(self, value: QPoint):
         while value in self.__model.batteries:
             self.__model.batteries.remove(value)
-        self.modelChanged(self.__model).emit()
+        self.modelChanged.emit(self.__model)
 
+    @pyqtSlot
     def step_back(self):
         self.__model.batteries.clear()
-        self.modelChanged(self.__model).emit()
+        self.modelChanged.emit(self.__model)
 
+    @pyqtSlot
     def init_maze(self):
         self.__init_default_maze_map()
         self.__locate_walls()
@@ -54,12 +58,14 @@ class MazeModel(QObject):
         self.__model.targetPosition = QPoint(self.__model.fieldWidth - 2, self.__model.fieldHeight - 2)
         self.__set_max_energy()
         self.__model.level += 1
-        self.modelChanged(self.__model).emit()
+        self.modelChanged.emit(self.__model)
 
-    def reset_level(self, success):
+    @pyqtSlot(bool)
+    def reset_level(self, success: bool):
         if success:
             self.__model.level = 0
 
+    @pyqtSlot
     def get_maze_model(self):
         return self.__model
 

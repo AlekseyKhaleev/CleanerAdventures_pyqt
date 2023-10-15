@@ -21,12 +21,14 @@ class Colors:
 
 @dataclass(frozen=True)
 class States:
-    WAIT: int = 0
-    MOVE: int = 1
-    REPLACE_BATTERY: int = 2
-    ROTATE: int = 3
-    STEP_BACK: int = 4
-    EXIT: int = 5
+    INIT: int = 0
+    WAIT: int = 1
+    MOVE: int = 2
+    REPLACE_BATTERY: int = 3
+    ROTATE: int = 4
+    STEP_BACK: int = 5
+    EXIT: int = 6
+    descriptions: tuple = ("wait", "move", "replace battery", "rotate", "step back", "exit")
 
 
 @dataclass
@@ -58,7 +60,7 @@ class RobotModel(QObject):
 
     # public slots
     def init_robot(self):
-        self.__model.state = States.WAIT
+        self.__model.state = States.INIT
         self.__model.robotDestination = Directions.UP
         self.__model.robotPosition = QPoint(1, 1)
         self.__model.curColor = Colors.GREEN
@@ -68,7 +70,7 @@ class RobotModel(QObject):
         self.__memory.append(self.__model)
         if self.__model.score:
             self.__model.score += 100
-        self.modelChanged(self.__model).emit()
+        self.modelChanged.emit(self.__model)
 
     def step_back(self):
         if self.__memory:
@@ -83,7 +85,7 @@ class RobotModel(QObject):
                 self.__model.curColor = last_model.curColor
                 self.__model.tmpColor = last_model.tmpColor
                 self.__model.state = States.STEP_BACK
-                self.modelChanged(self.__model).emit()
+                self.modelChanged.emit(self.__model)
 
             if not self.__memory:
                 self.__memory.append(self.__model)
@@ -96,12 +98,12 @@ class RobotModel(QObject):
         self.__model.curColor = color
         self.__model.tmpColor = Colors.WHITE
         self.__memory.append(self.__model)
-        self.modelChanged(self.__model).emit()
+        self.modelChanged.emit(self.__model)
 
     def wait(self):
         self.__model.state = States.WAIT
         self.__model.curColor, self.__model.tmpColor = self.__model.tmpColor, self.__model.curColor
-        self.modelChanged(self.__model).emit()
+        self.modelChanged.emit(self.__model)
 
     def get_model(self):
         return self.__model
@@ -113,7 +115,7 @@ class RobotModel(QObject):
         self.__model.curColor = Colors.GREEN
         self.__model.tmpColor = Colors.WHITE
         self.__memory.append(self.__model)
-        self.modelChanged(self.__model).emit()
+        self.modelChanged.emit(self.__model)
 
     def exit(self, success):
         self.__model.state = States.EXIT
@@ -124,4 +126,4 @@ class RobotModel(QObject):
             self.__model.tmpColor = Colors.WHITE
         else:
             self.__model.highScore += self.__model.score
-        self.modelChanged(self.__model).emit()
+        self.modelChanged.emit(self.__model)

@@ -29,7 +29,7 @@ class Line:
 
 class HighscoresWidget(QWidget):
     # signals
-    returnClicked = pyqtSignal(button=Menu.RETURN)
+    returnClicked = pyqtSignal(int)
     __layout, __HSFile, __FileLines, __LayLines = None, None, None, None
 
     def __init__(self, parent=None):
@@ -43,7 +43,7 @@ class HighscoresWidget(QWidget):
     # slots
     def keyPressEvent(self, event):
         if event.key() == Qt.Key.Key_Escape:
-            self.returnClicked().emit()
+            self.returnClicked.emit(Menu.RETURN)
 
     def read_high_scores(self):
         self.__FileLines.clear()

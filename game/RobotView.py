@@ -3,7 +3,7 @@ import copy
 from PyQt6.QtCore import QRect, pyqtSignal
 from PyQt6.QtGui import QImage, QPainter
 from PyQt6.QtWidgets import QWidget, QSizePolicy
-from dataclasses import dataclass
+
 import RobotModel
 
 
@@ -23,7 +23,7 @@ class RobotView(QWidget):
         self.draw_robot()
 
     def keyPressEvent(self, event):
-        self.key_handled(event.key()).emit()
+        self.key_handled.emit(event.key())
 
     def draw_robot(self):
         qp = QPainter(self)

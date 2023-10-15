@@ -5,7 +5,7 @@ from MenuWidget import Menu
 
 class AuthWidget(QWidget):
     # signals
-    returnClicked = pyqtSignal(button=Menu.RETURN)
+    returnClicked = pyqtSignal(int)
 
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
@@ -28,4 +28,4 @@ class AuthWidget(QWidget):
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key.Key_Escape:
-            self.returnClicked().emit()
+            self.returnClicked.emit(Menu.RETURN)
