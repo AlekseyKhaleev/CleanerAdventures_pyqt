@@ -11,7 +11,7 @@ import RobotModel
 
 class Controller(QObject):
     # signals
-    batteryFound = pyqtSignal(QPoint)
+    batteryFound = pyqtSignal([QPoint], [])
     batteryLocated = pyqtSignal(QPoint)
     energyChanged = pyqtSignal(int)
     levelDone = pyqtSignal(bool)

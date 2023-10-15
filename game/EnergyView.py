@@ -1,4 +1,4 @@
-from PyQt6.QtCore import QRect
+from PyQt6.QtCore import QRect, pyqtSlot
 from PyQt6.QtGui import QImage, QPainter
 from PyQt6.QtWidgets import QWidget, QSizePolicy
 from dataclasses import dataclass
@@ -25,15 +25,18 @@ class EnergyView(QWidget):
         self.__enStatus = Energy.en_90
         self.repaint()
 
+    # slots
+    @pyqtSlot
     def paintEvent(self, event):
         self.__draw_status()
 
+    @pyqtSlot
     def __draw_status(self):
         qp = QPainter(self)
         qp.drawImage(QRect(self.width() / 2 - self.width() * 0.3, 0, self.width() * 0.6, self.height()),
                      self.__enStatusImgs[self.__enStatus])
 
-    # slots
+    @pyqtSlot(int)
     def update_model(self, perc_energy):
         if perc_energy == 0:
             self.__enStatus = Energy.en_0

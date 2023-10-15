@@ -66,7 +66,7 @@ class MazeModel(QObject):
             self.__model.level = 0
 
     @pyqtSlot
-    def get_maze_model(self):
+    def get_model(self):
         return self.__model
 
     # private section

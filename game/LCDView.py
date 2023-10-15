@@ -1,34 +1,34 @@
-from PyQt6.QtCore import Qt, pyqtSignal
-from PyQt6.QtWidgets import QMessageBox, QPushButton, QLCDNumber
+from PyQt6.QtWidgets import QLCDNumber
 
-import MazeModel, RobotModel
+import MazeModel
+import RobotModel
+
 
 class LCDView(QLCDNumber):
 
     def __init__(self, model, parent=None):
         QLCDNumber.__init__(parent)
         self.setSegmentStyle(QLCDNumber.SegmentStyle.Filled)
-        if type(model) is MazeModel.model:
-            self.setDigitCount(self.getRange(model.level))
+        if type(model) is MazeModel.Model:
+            self.setDigitCount(self.get_range(model.level))
             self.display(model.level)
-        elif type(model) is RobotModel.model:
-            self.setDigitCount(self.getRange(model.score))
+        elif type(model) is RobotModel.Model:
+            self.setDigitCount(self.get_range(model.score))
             self.display(model.score)
 
     # slots
-    def updateModel(self, model):
-        if type(model) is MazeModel.model:
-            self.setDigitCount(self.getRange(model.level))
+    def update_model(self, model):
+        if type(model) is MazeModel.Model:
+            self.setDigitCount(self.get_range(model.level))
             self.display(model.level)
-        elif type(model) is RobotModel.model:
-            self.setDigitCount(self.getRange(model.score))
+        elif type(model) is RobotModel.Model:
+            self.setDigitCount(self.get_range(model.score))
             self.display(model.score)
 
     @staticmethod
-    def getRange(value):
+    def get_range(value):
         rang = 0
         while not value:
             rang += 1
             value /= 10
         return [0, rang][bool(rang)]
-

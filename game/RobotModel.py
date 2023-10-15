@@ -1,6 +1,7 @@
 from dataclasses import dataclass
-from PyQt6.QtCore import pyqtSignal, QPoint, QObject
+from PyQt6.QtCore import pyqtSignal, pyqtSlot, QPoint, QObject
 from collections import deque
+from copy import deepcopy
 
 
 @dataclass(frozen=True)
@@ -59,6 +60,7 @@ class RobotModel(QObject):
         self.init_robot()
 
     # public slots
+    @pyqtSlot
     def init_robot(self):
         self.__model.state = States.INIT
         self.__model.robotDestination = Directions.UP
@@ -72,6 +74,7 @@ class RobotModel(QObject):
             self.__model.score += 100
         self.modelChanged.emit(self.__model)
 
+    @pyqtSlot
     def step_back(self):
         if self.__memory:
             last_model = self.__memory.pop()
@@ -90,6 +93,7 @@ class RobotModel(QObject):
             if not self.__memory:
                 self.__memory.append(self.__model)
 
+    @pyqtSlot(QPoint, int, int)
     def move(self, tar_pos, score, color):
         self.__model.state = States.MOVE
         self.__model.steps += 1
@@ -100,15 +104,18 @@ class RobotModel(QObject):
         self.__memory.append(self.__model)
         self.modelChanged.emit(self.__model)
 
+    @pyqtSlot
     def wait(self):
         self.__model.state = States.WAIT
         self.__model.curColor, self.__model.tmpColor = self.__model.tmpColor, self.__model.curColor
         self.modelChanged.emit(self.__model)
 
+    @pyqtSlot
     def get_model(self):
         return self.__model
 
-    def replace_battery(self, bat_pos=None):
+    @pyqtSlot
+    def replace_battery(self):
         self.__model.state = States.REPLACE_BATTERY
         self.__model.steps = 0
         self.__model.score += 50
@@ -117,6 +124,7 @@ class RobotModel(QObject):
         self.__memory.append(self.__model)
         self.modelChanged.emit(self.__model)
 
+    @pyqtSlot(bool)
     def exit(self, success):
         self.__model.state = States.EXIT
         if not success:
@@ -126,4 +134,14 @@ class RobotModel(QObject):
             self.__model.tmpColor = Colors.WHITE
         else:
             self.__model.highScore += self.__model.score
+        self.modelChanged.emit(self.__model)
+
+    @pyqtSlot
+    def rotate(self, direction, cur_color):
+        self.__model.state = States.ROTATE
+        self.__model.robotDestination = direction
+        self.__model.steps += 1
+        self.__model.curColor = cur_color
+        self.__model.tmpColor = Colors.WHITE
+        self.__memory.append(deepcopy(self.__model))
         self.modelChanged.emit(self.__model)
