@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import QLCDNumber
 
-import MazeModel
-import RobotModel
+from maze_model import Model as MModel
+from robot_model import Model as RModel
 
 
 class LCDView(QLCDNumber):
@@ -9,19 +9,19 @@ class LCDView(QLCDNumber):
     def __init__(self, model, parent=None):
         QLCDNumber.__init__(parent)
         self.setSegmentStyle(QLCDNumber.SegmentStyle.Filled)
-        if type(model) is MazeModel.Model:
+        if type(model) is MModel:
             self.setDigitCount(self.get_range(model.level))
             self.display(model.level)
-        elif type(model) is RobotModel.Model:
+        elif type(model) is RModel:
             self.setDigitCount(self.get_range(model.score))
             self.display(model.score)
 
     # slots
     def update_model(self, model):
-        if type(model) is MazeModel.Model:
+        if type(model) is MModel:
             self.setDigitCount(self.get_range(model.level))
             self.display(model.level)
-        elif type(model) is RobotModel.Model:
+        elif type(model) is RModel:
             self.setDigitCount(self.get_range(model.score))
             self.display(model.score)
 

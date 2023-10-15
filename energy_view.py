@@ -26,11 +26,11 @@ class EnergyView(QWidget):
         self.repaint()
 
     # slots
-    @pyqtSlot
+    @pyqtSlot()
     def paintEvent(self, event):
         self.__draw_status()
 
-    @pyqtSlot
+    @pyqtSlot()
     def __draw_status(self):
         qp = QPainter(self)
         qp.drawImage(QRect(self.width() / 2 - self.width() * 0.3, 0, self.width() * 0.6, self.height()),

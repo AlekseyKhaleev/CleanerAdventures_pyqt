@@ -1,15 +1,15 @@
 from PyQt6.QtCore import pyqtSignal, QObject, Qt
 from PyQt6.QtWidgets import QWidget, QLabel, QStackedLayout, QGridLayout
 
-from game.Controller import Controller
-from game.EnergyView import EnergyView
-from game.GameOverView import GameOverView
-from game.LCDView import LCDView
-from game.LogView import LogView
-from game.MazeModel import MazeModel
-from game.MazeView import MazeView
-from game.RobotModel import RobotModel
-from game.RobotView import RobotView
+from controller import Controller
+from energy_view import EnergyView
+from game_over_view import GameOverView
+from lcd_view import LCDView
+from log_view import LogView
+from maze_model import MazeModel
+from maze_view import MazeView
+from robot_model import RobotModel
+from robot_view import RobotView
 
 
 class GameWidget(QWidget):

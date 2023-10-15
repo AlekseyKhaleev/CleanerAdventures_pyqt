@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from PyQt6.QtCore import pyqtSignal, Qt, QFile, QIODevice
 from PyQt6.QtWidgets import QWidget, QGridLayout, QLabel, QSizePolicy
 
-from MenuWidget import Menu
+from menu_widget import Menu
 
 
 @dataclass
@@ -30,15 +30,15 @@ class Line:
 class HighscoresWidget(QWidget):
     # signals
     returnClicked = pyqtSignal(int)
-    __layout, __HSFile, __FileLines, __LayLines = None, None, None, None
+    __FileLines, __LayLines = None, None
 
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
         self.__LayLines = [] if self.__LayLines is None else ...
         self.__FileLines = [] if self.__FileLines is None else ...
-        __HSFile = QFile("../resources/highscores.txt")
-        __layout = QGridLayout()
-        self.setLayout(__layout)
+        self.__HS_file_path = "resources/highscores.txt"
+        self.__layout = QGridLayout()
+        self.setLayout(self.__layout)
 
     # slots
     def keyPressEvent(self, event):
@@ -47,20 +47,14 @@ class HighscoresWidget(QWidget):
 
     def read_high_scores(self):
         self.__FileLines.clear()
-        if self.__HSFile.open(QIODevice.OpenModeFlag.ReadOnly | QIODevice.OpenModeFlag.Text):
-            while not self.__HSFile.atEnd():
-                line_name = self.__HSFile.readline()
-                line_name.remove("\n")
-                line_score = self.__HSFile.readline()
-                line_score.remove("\n")
-                self.__FileLines.append(Line(line_name, int(line_score)))
-            self.__HSFile.close()
+        with open(self.__HS_file_path, "r") as hs_file:
+            data = [line.replace("\n", "") for line in hs_file.readlines()]
+            self.__FileLines = [Line(n, s) for n, s in zip(data[::2], map(int, data[1::2]))]
             self.__create_lay_lines()
 
     def __create_lay_lines(self):
-        while item := self.__layout.takeAt(0) is not None:
-            del item.widget
-            del item
+        while self.__layout.takeAt(0) is not None:
+            self.__layout.removeItem(self.__layout.takeAt(0))
         title = QLabel("Highscores: ")
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         title.setStyleSheet("QLabel { font: bold; font-size: 72px }")

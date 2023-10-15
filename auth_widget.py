@@ -10,7 +10,7 @@ class AuthWidget(QWidget):
         QWidget.__init__(self, parent)
         self.__layout = QVBoxLayout()
         self.__auth = QLineEdit()
-        self.__auth.returnPressed().connect(self.__changeName__())
+        self.__auth.returnPressed.connect(self.__change_name)
         auth_label = QLabel("Enter your name, robot: ")
         auth_label.setStyleSheet("font: bold; font-size: 72px; color: white; background-color: black")
         self.__auth.setMaxLength(12)
@@ -23,6 +23,6 @@ class AuthWidget(QWidget):
         self.setLayout(self.__layout)
 
     # slots
-    def __changeName__(self):
+    def __change_name(self):
         self.nameChanged.emit(self.__auth.text())
         self.__auth.clear()

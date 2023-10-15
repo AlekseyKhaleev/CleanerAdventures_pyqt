@@ -1,12 +1,13 @@
 from PyQt6.QtCore import pyqtSlot, QObject, QCoreApplication
 from PyQt6.QtWidgets import QWidget, QStackedLayout
 
-from AboutWidget import AboutWidget
-from AuthWidget import AuthWidget
-from ControlsWidget import ControlsWidget
-from GameWidget import GameWidget
-from HighscoresWidget import HighscoresWidget
-from MenuWidget import Menu, MenuWidget
+from about_widget import AboutWidget
+from auth_widget import AuthWidget
+from controls_widget import ControlsWidget
+from game_widget import GameWidget
+from highscores_widget import HighscoresWidget
+from menu_widget import Menu, MenuWidget
+from functools import partial
 
 
 class MainWidget(QWidget):
@@ -25,16 +26,16 @@ class MainWidget(QWidget):
 
         # -----------------------------------CONNECTIONS------------------------------------------------
         # SENDER: __menu
-        self.__menu.newGameClicked.connect(self.change_widgets)
-        self.__menu.controlsClicked.connect(self.change_widgets)
-        self.__menu.highscoresClicked.connect(self.change_widgets)
-        self.__menu.aboutClicked.connect(self.change_widgets)
-        self.__menu.exitClicked.connect(self.change_widgets)
-        self.__menu.returnClicked.connect(self.change_widgets)
+        self.__menu.newGameClicked.connect(partial(self.change_widgets, Menu.NEW_GAME))
+        self.__menu.controlsClicked.connect(partial(self.change_widgets, Menu.CONTROLS))
+        self.__menu.highscoresClicked.connect(partial(self.change_widgets, Menu.HIGHSCORES))
+        self.__menu.aboutClicked.connect(partial(self.change_widgets, Menu.ABOUT))
+        self.__menu.exitClicked.connect(partial(self.change_widgets, Menu.EXIT))
+        self.__menu.returnClicked.connect(partial(self.change_widgets, Menu.RETURN))
         # SENDER: others
-        self.__controls.returnClicked.connect(self.change_widgets)
-        self.__about.returnClicked.connect(self.change_widgets)
-        self.__highscores.returnClicked.connect(self.change_widgets)
+        self.__controls.returnClicked.connect(partial(self.change_widgets, Menu.RETURN))
+        self.__about.returnClicked.connect(partial(self.change_widgets, Menu.RETURN))
+        self.__highscores.returnClicked.connect(partial(self.change_widgets, Menu.RETURN))
         self.__auth.nameChanged.connect(self.init_new_game)
 
         # ---------------------------------END CONNECTIONS----------------------------------------------
@@ -50,6 +51,7 @@ class MainWidget(QWidget):
 
     # public slots
     @pyqtSlot(int)
+    @pyqtSlot(bool)
     def change_widgets(self, button: int):
         match button:
             case Menu.NEW_GAME:

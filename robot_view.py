@@ -4,14 +4,14 @@ from PyQt6.QtCore import QRect, pyqtSignal
 from PyQt6.QtGui import QImage, QPainter
 from PyQt6.QtWidgets import QWidget, QSizePolicy
 
-import RobotModel
+from robot_model import Model as RModel
 
 
 class RobotView(QWidget):
     # signals
     key_handled = pyqtSignal(int)
 
-    def __init__(self, target_model: RobotModel.Model, parent=None):
+    def __init__(self, target_model: RModel, parent=None):
         QWidget.__init__(self, parent)
         self.__view_model = target_model
         self.__white, self.__green, self.__yellow, self.__red = [
@@ -27,11 +27,11 @@ class RobotView(QWidget):
 
     def draw_robot(self):
         qp = QPainter(self)
-        qp.drawImage(QRect(self.__view_model.robotPosition.x() * RobotModel.Model.DOT_SIDE,
-                           self.__view_model.robotPosition.y() * RobotModel.Model.DOT_SIDE,
-                           RobotModel.Model.DOT_SIDE, RobotModel.Model.DOT_SIDE),
+        qp.drawImage(QRect(self.__view_model.robotPosition.x() * RModel.DOT_SIDE,
+                           self.__view_model.robotPosition.y() * RModel.DOT_SIDE,
+                           RModel.DOT_SIDE, RModel.DOT_SIDE),
                      self.__robot_skin[self.__view_model.curColor][self.__view_model.robotDestination])
 
-    def update_model(self, model: RobotModel.Model):
+    def update_model(self, model: RModel):
         self.__view_model = model
         self.repaint()

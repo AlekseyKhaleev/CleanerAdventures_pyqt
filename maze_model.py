@@ -15,7 +15,7 @@ class Model:
     maxEnergy: int = 0
     walls: set[QPoint] = field(default_factory=set)
     cells: set[QPoint] = field(default_factory=set)
-    batteries: deque[QPoint] = deque()
+    batteries: deque[QPoint] = field(default_factory=deque)
     targetPosition: QPoint = QPoint()
 
 
@@ -43,12 +43,12 @@ class MazeModel(QObject):
             self.__model.batteries.remove(value)
         self.modelChanged.emit(self.__model)
 
-    @pyqtSlot
+    @pyqtSlot()
     def step_back(self):
         self.__model.batteries.clear()
         self.modelChanged.emit(self.__model)
 
-    @pyqtSlot
+    @pyqtSlot()
     def init_maze(self):
         self.__init_default_maze_map()
         self.__locate_walls()
@@ -65,7 +65,7 @@ class MazeModel(QObject):
         if success:
             self.__model.level = 0
 
-    @pyqtSlot
+    @pyqtSlot()
     def get_model(self):
         return self.__model
 

@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import QWidget, QGridLayout, QLabel
 from PyQt6.QtCore import pyqtSignal, Qt
-from MenuWidget import Menu
+from menu_widget import Menu
 
 
 class AboutWidget(QWidget):

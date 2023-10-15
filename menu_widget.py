@@ -16,12 +16,12 @@ class Menu:
 
 class MenuWidget(QWidget):
     # signals
-    returnClicked = pyqtSignal(int)
-    newGameClicked = pyqtSignal(int)
-    controlsClicked = pyqtSignal(int)
-    highscoresClicked = pyqtSignal(int)
-    aboutClicked = pyqtSignal(int)
-    exitClicked = pyqtSignal(int)
+    returnClicked = pyqtSignal([bool], [int])
+    newGameClicked = pyqtSignal([bool], [int])
+    controlsClicked = pyqtSignal([bool], [int])
+    highscoresClicked = pyqtSignal([bool], [int])
+    aboutClicked = pyqtSignal([bool], [int])
+    exitClicked = pyqtSignal([bool], [int])
 
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)

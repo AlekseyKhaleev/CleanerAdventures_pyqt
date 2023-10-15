@@ -60,7 +60,7 @@ class RobotModel(QObject):
         self.init_robot()
 
     # public slots
-    @pyqtSlot
+    @pyqtSlot()
     def init_robot(self):
         self.__model.state = States.INIT
         self.__model.robotDestination = Directions.UP
@@ -74,7 +74,7 @@ class RobotModel(QObject):
             self.__model.score += 100
         self.modelChanged.emit(self.__model)
 
-    @pyqtSlot
+    @pyqtSlot()
     def step_back(self):
         if self.__memory:
             last_model = self.__memory.pop()
@@ -104,17 +104,17 @@ class RobotModel(QObject):
         self.__memory.append(self.__model)
         self.modelChanged.emit(self.__model)
 
-    @pyqtSlot
+    @pyqtSlot()
     def wait(self):
         self.__model.state = States.WAIT
         self.__model.curColor, self.__model.tmpColor = self.__model.tmpColor, self.__model.curColor
         self.modelChanged.emit(self.__model)
 
-    @pyqtSlot
+    @pyqtSlot()
     def get_model(self):
         return self.__model
 
-    @pyqtSlot
+    @pyqtSlot()
     def replace_battery(self):
         self.__model.state = States.REPLACE_BATTERY
         self.__model.steps = 0
@@ -136,7 +136,7 @@ class RobotModel(QObject):
             self.__model.highScore += self.__model.score
         self.modelChanged.emit(self.__model)
 
-    @pyqtSlot
+    @pyqtSlot()
     def rotate(self, direction, cur_color):
         self.__model.state = States.ROTATE
         self.__model.robotDestination = direction

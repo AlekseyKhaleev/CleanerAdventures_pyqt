@@ -1,10 +1,10 @@
 from PyQt6.QtCore import Qt, QTime
 from PyQt6.QtWidgets import QListWidget, QSizePolicy, QVBoxLayout
-from RobotModel import Model, States
-import RobotView
+from robot_model import Model, States
+from robot_view import RobotView
 
 
-class LogView(RobotView.RobotView):
+class LogView(RobotView):
 
     def __init__(self, target_model: Model, parent=None):
         super().__init__(target_model, parent)
