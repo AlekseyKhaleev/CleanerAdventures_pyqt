@@ -3,7 +3,7 @@ from PyQt6.QtCore import pyqtSignal, Qt
 from MenuWidget import Menu
 
 
-class AuthWidget(QWidget):
+class ControlsWidget(QWidget):
     # signals
     returnClicked = pyqtSignal(int)
 
