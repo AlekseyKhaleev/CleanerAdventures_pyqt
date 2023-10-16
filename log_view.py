@@ -11,7 +11,7 @@ class LogView(RobotView):
         self.__logs = QListWidget()
         self.__logs.setItemAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.__logs.setStyleSheet("border: 6px solid white; font: bold; font-size: 14px")
-        self.__logs.addItem(QTime.currentTime().toString() + "   -   " + States.descriptions[self.__view_model.state])
+        self.__logs.addItem(QTime.currentTime().toString() + "   -   " + States.descriptions[self.get_state()])
         self.__logs.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.__logs.setWindowFlag(Qt.WindowType.FramelessWindowHint)
         self.__logs.setSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Ignored)
@@ -20,7 +20,7 @@ class LogView(RobotView):
         self.setLayout(layout)
 
     def update_model(self, model: Model):
-        if model.state != self.__view_model.state:
+        if model.state != self.get_state():
             self.__view_model = model
             if self.__view_model.state == States.INIT:
                 self.__logs.clear()

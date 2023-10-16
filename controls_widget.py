@@ -8,7 +8,7 @@ class ControlsWidget(QWidget):
     returnClicked = pyqtSignal(int)
 
     def __init__(self, parent=None):
-        QWidget.__init__(self, parent)
+        super().__init__(parent)
         layout, title = QGridLayout(), QLabel("Control keys:")
         title.setStyleSheet("QLabel { font: bold solid black; font-size: 72px; }")
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)

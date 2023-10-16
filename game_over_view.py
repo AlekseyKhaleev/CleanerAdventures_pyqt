@@ -8,7 +8,7 @@ class GameOverView(QMessageBox):
     gameEnded = pyqtSignal()
 
     def __init__(self, parent=None):
-        QMessageBox.__init__(self, parent)
+        super().__init__(parent)
         self.__accept = self.createButton("")
         self.__exit = self.createButton("I'LL BE BACK")
         self.setStyleSheet(

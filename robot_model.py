@@ -38,7 +38,7 @@ class Model:
     tmpColor: int = 0
     robotDestination: int = 0
 
-    DOT_SIDE: int = 34
+    DOT_SIDE: int = 32
     score: int = 0
     highScore: int = 0
     steps: int = 0
@@ -53,7 +53,7 @@ class RobotModel(QObject):
     modelChanged = pyqtSignal(Model)
 
     def __init__(self, name, parent=None):
-        QObject.__init__(self, parent)
+        super().__init__(parent)
         self.__model = Model()
         self.__memory = deque()
         self.__model.name = name

@@ -79,7 +79,7 @@ class Controller(QObject):
 
     # public
     def __init__(self, robot_model: RModel, maze_model: MModel, parent=None):
-        QObject.__init__(self, parent)
+        super().__init__(parent)
         self.__robot_model = deepcopy(robot_model)
         self.__maze_model = deepcopy(maze_model)
         self.__score_increase = True

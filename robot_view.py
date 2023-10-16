@@ -1,8 +1,6 @@
-import copy
-
 from PyQt6.QtCore import QRect, pyqtSignal
 from PyQt6.QtGui import QImage, QPainter
-from PyQt6.QtWidgets import QWidget, QSizePolicy
+from PyQt6.QtWidgets import QWidget
 
 from robot_model import Model as RModel
 
@@ -12,10 +10,10 @@ class RobotView(QWidget):
     key_handled = pyqtSignal(int)
 
     def __init__(self, target_model: RModel, parent=None):
-        QWidget.__init__(self, parent)
+        super().__init__(parent)
         self.__view_model = target_model
         self.__white, self.__green, self.__yellow, self.__red = [
-            [QImage(f":/images/VC_{col}_{dest}") for dest in ["lt", "rt", "up", "dn"]] for col in
+            [QImage(f"../images/VC_{col}_{dest}.png") for dest in ["lt", "rt", "up", "dn"]] for col in
             ["wt", "gr", "yw", "rd"]]
         self.__robot_skin = (self.__white, self.__green, self.__yellow, self.__red)
 
@@ -35,3 +33,6 @@ class RobotView(QWidget):
     def update_model(self, model: RModel):
         self.__view_model = model
         self.repaint()
+
+    def get_state(self):
+        return self.__view_model.state

@@ -1,5 +1,5 @@
 from PyQt6.QtCore import QRect, Qt
-from PyQt6.QtGui import QImage, QPainter, QColor
+from PyQt6.QtGui import QImage, QPainter, QColor, QPixmap
 from PyQt6.QtWidgets import QWidget, QStyleOption, QStyle
 
 from maze_model import Model as MModel
@@ -7,23 +7,26 @@ from maze_model import Model as MModel
 
 class MazeView(QWidget):
     def __init__(self, target_model: MModel, parent=None):
-        QWidget.__init__(self, parent)
+        super().__init__(parent)
         self.__view_model = target_model
-        self.__battery_image = QImage(":/images/battery.png")
-        self.__target_image = QImage(":/images/target.png")
+        self.__battery_image = QImage("/resources/images/battery.png")
+        self.__target_image = QPixmap("/resources/images/target.png")
         self.repaint()
 
     def draw_maze(self):
         qp = QPainter(self)
         dot_side = MModel.DOT_SIDE
-        for w in self.__view_model.walls:
-            qp.setBrush(QColor(Qt.GlobalColor.black))
-            qp.drawRect(w.x() * dot_side, w.y() * dot_side, dot_side, dot_side)
+        # for w in self.__view_model.walls:
+        #     qp.setBrush(QColor(Qt.GlobalColor.black))
+        #     qp.drawRect(w.x() * dot_side, w.y() * dot_side, dot_side, dot_side)
+        for c in self.__view_model.cells:
+            qp.setBrush(QColor(Qt.GlobalColor.white))
+            qp.drawRect(c.x() * dot_side, c.y() * dot_side, dot_side, dot_side)
 
     def draw_target(self):
         qp = QPainter(self)
         dot_side = MModel.DOT_SIDE
-        qp.drawImage(QRect(self.__view_model.targetPosition.x() * dot_side,
+        qp.drawPixmap(QRect(self.__view_model.targetPosition.x() * dot_side,
                            self.__view_model.targetPosition.y() * dot_side, dot_side, dot_side), self.__target_image)
 
     def draw_battery(self):

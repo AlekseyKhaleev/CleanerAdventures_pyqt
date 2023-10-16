@@ -8,7 +8,7 @@ class AboutWidget(QWidget):
     returnClicked = pyqtSignal(int)
 
     def __init__(self, parent=None):
-        QWidget.__init__(self, parent)
+        super().__init__(parent)
         layout = QGridLayout()
         title = QLabel("About Cleaner Adventures")
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
