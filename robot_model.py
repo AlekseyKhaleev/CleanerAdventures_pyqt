@@ -136,7 +136,7 @@ class RobotModel(QObject):
             self.__model.highScore += self.__model.score
         self.modelChanged.emit(self.__model)
 
-    @pyqtSlot()
+    @pyqtSlot(int, int)
     def rotate(self, direction, cur_color):
         self.__model.state = States.ROTATE
         self.__model.robotDestination = direction
