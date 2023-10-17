@@ -1,5 +1,5 @@
-from PyQt6.QtCore import QRect, pyqtSignal
-from PyQt6.QtGui import QImage, QPainter
+from PyQt6.QtCore import QRect, pyqtSignal, Qt
+from PyQt6.QtGui import QImage, QPainter, QColor
 from PyQt6.QtWidgets import QWidget
 
 from robot_model import Model as RModel
@@ -17,12 +17,21 @@ class RobotView(QWidget):
             [QImage(f"resources/images/VC_{col}_{dest}.png") for dest in ["lt", "rt", "up", "dn"]] for col in
             ["wt", "gr", "yw", "rd"]]
         self.__robot_skin = (self.__white, self.__green, self.__yellow, self.__red)
+        self._clean_image = QImage("resources/images/milky_way.png")
 
     def paintEvent(self, event):
+        self.clean()
         self.draw_robot()
 
     def keyPressEvent(self, event):
         self.key_handled.emit(event.key())
+
+    def clean(self):
+        qp = QPainter(self)
+        qp.setBrush(QColor(Qt.GlobalColor.white))
+        dot_size = GameData.DOT_SIZE
+        for p in self.__view_model.way:
+            qp.drawImage(QRect(p.x() * dot_size, p.y() * dot_size, dot_size, dot_size), self._clean_image)
 
     def draw_robot(self):
         dot_size = GameData.DOT_SIZE

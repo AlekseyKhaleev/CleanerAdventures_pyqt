@@ -1,9 +1,9 @@
-from PyQt6.QtCore import QRect, Qt
-from PyQt6.QtGui import QImage, QPainter, QColor, QPixmap
+from PyQt6.QtCore import QRect
+from PyQt6.QtGui import QImage, QPainter
 from PyQt6.QtWidgets import QWidget, QStyleOption, QStyle
 
-from maze_model import Model as MModel
 from game_data import GameData
+from maze_model import Model as MModel
 
 
 class MazeView(QWidget):
@@ -12,13 +12,13 @@ class MazeView(QWidget):
         self.__view_model = target_model
         self.__battery_image = QImage("resources/images/battery.png")
         self.__target_image = QImage("resources/images/target.png")
+        self.__dirty_image = QImage("resources/images/dirty_way.png")
         self.repaint()
 
     def draw_maze(self, qp: QPainter):
         dot_side = GameData.DOT_SIZE
         for c in self.__view_model.cells:
-            qp.setBrush(QColor(Qt.GlobalColor.white))
-            qp.drawRect(c.x() * dot_side, c.y() * dot_side, dot_side, dot_side)
+            qp.drawImage(QRect(c.x() * dot_side, c.y() * dot_side, dot_side, dot_side), self.__dirty_image)
 
     def draw_target(self, qp: QPainter):
         dot_side = GameData.DOT_SIZE

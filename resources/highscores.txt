@@ -1,3 +1,5 @@
+Python
+1980
 Check56
 206
 
@@ -8,11 +10,9 @@ zzzz
 150
 
 42
+
+26
 Alex
 12
 Robot 5
 5
-ddd
-5
-Robot 4
-4

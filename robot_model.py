@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from PyQt6.QtCore import pyqtSignal, pyqtSlot, QPoint, QObject
 from collections import deque
 from copy import deepcopy
@@ -34,6 +34,7 @@ class States:
 
 @dataclass
 class Model:
+    way: deque
     curColor: int = 0
     tmpColor: int = 0
     robotDestination: int = 0
@@ -51,7 +52,7 @@ class RobotModel(QObject):
 
     def __init__(self, name, parent=None):
         super().__init__(parent)
-        self.__model = Model()
+        self.__model = Model(deque())
         self.__memory = deque()
         self.__model.name = name
         self.init_robot()
@@ -62,9 +63,13 @@ class RobotModel(QObject):
         self.__model.state = States.INIT
         self.__model.robotDestination = Directions.UP
         self.__model.robotPosition = QPoint(1, 1)
+
         self.__model.curColor = Colors.GREEN
         self.__model.tmpColor = Colors.WHITE
         self.__model.steps = 0
+
+        self.__model.way.clear()
+        self.__model.way.append(QPoint(1, 1))
         self.__memory.clear()
         self.__memory.append(deepcopy(self.__model))
         if self.__model.score:
@@ -84,6 +89,7 @@ class RobotModel(QObject):
                 self.__model.steps = last_model.steps
                 self.__model.curColor = last_model.curColor
                 self.__model.tmpColor = last_model.tmpColor
+                self.__model.way = last_model.way
                 self.__model.state = States.STEP_BACK
                 self.modelChanged.emit(self.__model)
 
@@ -98,6 +104,7 @@ class RobotModel(QObject):
         self.__model.score = score
         self.__model.curColor = color
         self.__model.tmpColor = Colors.WHITE
+        self.__model.way.append(QPoint(self.__model.robotPosition))
         self.__memory.append(deepcopy(self.__model))
         self.modelChanged.emit(self.__model)
 
