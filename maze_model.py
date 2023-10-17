@@ -55,7 +55,8 @@ class MazeModel(QObject):
         if self.__model.batteries:
             self.__model.batteries.clear()
         self.__model.batteries.append(QPoint(-1, -1))
-        self.__model.targetPosition = QPoint(self.__model.fieldWidth - 2, self.__model.fieldHeight - 2)
+        # self.__model.targetPosition = QPoint(self.__model.fieldWidth - 2, self.__model.fieldHeight - 2)
+        self.__model.targetPosition = sorted(self.__model.cells, key=lambda p: (p.x(), p.y()))[-1]
         self.__set_max_energy()
         self.__model.level += 1
         self.modelChanged.emit(self.__model)
@@ -141,7 +142,7 @@ class MazeModel(QObject):
             else:
                 break
         self.__model.maxEnergy += len(way)
-        for i in range(1, len(way)):
+        for i in range(1, len(way)-1):
             if (way[i - 1].x() == way[i].x() and way[i + 1].y() == way[i].y()) or (
                     way[i - 1].y() == way[i].y() and way[i + 1].x() == way[i].x()):
                 self.__model.maxEnergy += 1

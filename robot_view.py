@@ -13,7 +13,7 @@ class RobotView(QWidget):
         super().__init__(parent)
         self.__view_model = target_model
         self.__white, self.__green, self.__yellow, self.__red = [
-            [QImage(f"../images/VC_{col}_{dest}.png") for dest in ["lt", "rt", "up", "dn"]] for col in
+            [QImage(f"resources/images/VC_{col}_{dest}.png") for dest in ["lt", "rt", "up", "dn"]] for col in
             ["wt", "gr", "yw", "rd"]]
         self.__robot_skin = (self.__white, self.__green, self.__yellow, self.__red)
 

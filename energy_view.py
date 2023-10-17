@@ -17,7 +17,7 @@ class Energy:
 
 class EnergyView(QWidget):
 
-    __enStatusImgs = [QImage(f":/images/en_{perc}") for perc in (0, 10, 30, 50, 70, 80, 90)]
+    __enStatusImgs = [QImage(f"resources/images/en_{perc}") for perc in (0, 10, 30, 50, 70, 80, 90)]
 
     def __init__(self, parent=None):
         super().__init__(parent)

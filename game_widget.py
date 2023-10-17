@@ -33,7 +33,7 @@ class GameWidget(QWidget):
 
         self.setStyleSheet("QWidget {background-color: black; color: WHITE;}")
         self.__robotView.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
-        self.__mazeView.setStyleSheet("MazeView {background-color: WHITE; color: black;}")
+        self.__mazeView.setStyleSheet("MazeView {background-color: black; color: white;}")
 
         # -----------------------------------CONNECTIONS------------------------------------------------
         # SENDER: __gameOverView
