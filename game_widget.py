@@ -44,6 +44,7 @@ class GameWidget(QWidget):
         self.__maze_model.modelChanged.connect(self.__controller.update_maze_model)
         self.__maze_model.modelChanged.connect(self.__mazeView.update_model)
         self.__maze_model.modelChanged.connect(self.__levelView.update_model)
+        self.__maze_model.dot_size_changed.connect(self.__robot_model.update_dot_side)
         # SENDER: __robot_model
         self.__robot_model.modelChanged.connect(self.__controller.update_robot_model)
         self.__robot_model.modelChanged.connect(self.__robotView.update_model)

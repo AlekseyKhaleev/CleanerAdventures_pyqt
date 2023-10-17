@@ -3,6 +3,7 @@ from PyQt6.QtGui import QImage, QPainter
 from PyQt6.QtWidgets import QWidget
 
 from robot_model import Model as RModel
+from game_data import GameData
 
 
 class RobotView(QWidget):
@@ -24,10 +25,11 @@ class RobotView(QWidget):
         self.key_handled.emit(event.key())
 
     def draw_robot(self):
+        dot_size = GameData.DOT_SIZE
         qp = QPainter(self)
-        qp.drawImage(QRect(self.__view_model.robotPosition.x() * RModel.DOT_SIDE,
-                           self.__view_model.robotPosition.y() * RModel.DOT_SIDE,
-                           RModel.DOT_SIDE, RModel.DOT_SIDE),
+        qp.drawImage(QRect(self.__view_model.robotPosition.x() * dot_size,
+                           self.__view_model.robotPosition.y() * dot_size,
+                           dot_size, dot_size),
                      self.__robot_skin[self.__view_model.curColor][self.__view_model.robotDestination])
 
     def update_model(self, model: RModel):

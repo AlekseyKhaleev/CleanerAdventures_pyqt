@@ -1,5 +1,7 @@
 Check56
 206
+
+168
 aaazxc
 158
 zzzz
@@ -14,5 +16,3 @@ Robot 4
 4
 Robot 3
 3
-Robot 2
-2

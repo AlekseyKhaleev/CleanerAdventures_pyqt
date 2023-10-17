@@ -3,10 +3,8 @@ from PyQt6.QtWidgets import QLCDNumber
 from maze_model import Model as MModel
 from robot_model import Model as RModel
 
-from copy import deepcopy
 
 class LCDView(QLCDNumber):
-
     def __init__(self, model, parent=None):
         super().__init__(parent)
         self.setSegmentStyle(QLCDNumber.SegmentStyle.Filled)

@@ -29,7 +29,7 @@ class States:
     ROTATE: int = 4
     STEP_BACK: int = 5
     EXIT: int = 6
-    descriptions: tuple = ("wait", "move", "replace battery", "rotate", "step back", "exit")
+    descriptions: tuple = ("init", "wait", "move", "replace battery", "rotate", "step back", "exit")
 
 
 @dataclass
@@ -37,8 +37,6 @@ class Model:
     curColor: int = 0
     tmpColor: int = 0
     robotDestination: int = 0
-
-    DOT_SIDE: int = 32
     score: int = 0
     highScore: int = 0
     steps: int = 0
@@ -48,7 +46,6 @@ class Model:
 
 
 class RobotModel(QObject):
-
     # signals
     modelChanged = pyqtSignal(Model)
 
@@ -73,6 +70,10 @@ class RobotModel(QObject):
         if self.__model.score:
             self.__model.score += 100
         self.modelChanged.emit(self.__model)
+
+    @pyqtSlot(int)
+    def update_dot_side(self, dot_size):
+        self.__model.DOT_SIDE = dot_size
 
     @pyqtSlot()
     def step_back(self):

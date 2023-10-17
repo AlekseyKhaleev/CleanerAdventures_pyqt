@@ -6,10 +6,11 @@ from dataclasses import dataclass, field
 from PyQt6.QtCore import pyqtSignal, pyqtSlot, QPoint, QObject, QTime
 from PyQt6.QtGui import QGuiApplication
 
+from game_data import GameData
+
 
 @dataclass
 class Model:
-    DOT_SIDE: int = 32
     level: int = 0
     fieldWidth: int = 0
     fieldHeight: int = 0
@@ -23,12 +24,11 @@ class Model:
 class MazeModel(QObject):
     # signals
     modelChanged = pyqtSignal(Model)
+    dot_size_changed = pyqtSignal(int)
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.__model = Model()
-
-        self.__init_field_size()
         self.init_maze()
 
     # public slots
@@ -50,21 +50,23 @@ class MazeModel(QObject):
 
     @pyqtSlot()
     def init_maze(self):
+        self.__model.level += 1
+        GameData.set_dot_size(self.__model.level)
+        self.__init_field_size()
         self.__init_default_maze_map()
         self.__locate_walls()
         if self.__model.batteries:
             self.__model.batteries.clear()
         self.__model.batteries.append(QPoint(-1, -1))
-        # self.__model.targetPosition = QPoint(self.__model.fieldWidth - 2, self.__model.fieldHeight - 2)
         self.__model.targetPosition = sorted(self.__model.cells, key=lambda p: (p.x(), p.y()))[-1]
         self.__set_max_energy()
-        self.__model.level += 1
         self.modelChanged.emit(self.__model)
 
     @pyqtSlot(bool)
     def reset_level(self, success: bool):
-        if success:
+        if not success:
             self.__model.level = 0
+
 
     @pyqtSlot()
     def get_model(self):
@@ -73,8 +75,8 @@ class MazeModel(QObject):
     # private section
     def __init_field_size(self):
         rec = QGuiApplication.primaryScreen().size()
-        self.__model.fieldWidth = math.floor(rec.width() / self.__model.DOT_SIDE)
-        self.__model.fieldHeight = math.floor((rec.height() * 0.8) / self.__model.DOT_SIDE)
+        self.__model.fieldWidth = math.floor(rec.width() / GameData.DOT_SIZE)
+        self.__model.fieldHeight = math.floor((rec.height() * 0.8) / GameData.DOT_SIZE)
 
     def __init_default_maze_map(self):
         self.__model.cells.clear()
