@@ -50,7 +50,7 @@ class MazeModel(QObject):
     @pyqtSlot()
     def init_maze(self):
         self.__model.level += 1
-        GameData.set_dot_size(self.__model.level)
+        GameData.decrease_dot_size(self.__model.level)
         self.__init_field_size()
         self.__init_default_maze_map()
         self.__locate_walls()
