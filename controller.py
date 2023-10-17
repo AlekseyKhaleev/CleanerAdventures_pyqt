@@ -46,6 +46,8 @@ class Controller(QObject):
                     self.robot_rotated.emit(Directions.DOWN, self.__check_energy())
             case Qt.Key.Key_Space:
                 self.__move_robot()
+            case Qt.Key.Key_Backspace:
+                self.step_back.emit()
             case Qt.Key.Key_Escape:
                 self.return_clicked.emit(Menu.RETURN)
             case _:

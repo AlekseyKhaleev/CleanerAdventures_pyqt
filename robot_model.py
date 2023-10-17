@@ -66,14 +66,10 @@ class RobotModel(QObject):
         self.__model.tmpColor = Colors.WHITE
         self.__model.steps = 0
         self.__memory.clear()
-        self.__memory.append(self.__model)
+        self.__memory.append(deepcopy(self.__model))
         if self.__model.score:
             self.__model.score += 100
         self.modelChanged.emit(self.__model)
-
-    @pyqtSlot(int)
-    def update_dot_side(self, dot_size):
-        self.__model.DOT_SIDE = dot_size
 
     @pyqtSlot()
     def step_back(self):
@@ -92,7 +88,7 @@ class RobotModel(QObject):
                 self.modelChanged.emit(self.__model)
 
             if not self.__memory:
-                self.__memory.append(self.__model)
+                self.__memory.append(deepcopy(self.__model))
 
     @pyqtSlot(QPoint, int, int)
     def move(self, tar_pos, score, color):
@@ -102,7 +98,7 @@ class RobotModel(QObject):
         self.__model.score = score
         self.__model.curColor = color
         self.__model.tmpColor = Colors.WHITE
-        self.__memory.append(self.__model)
+        self.__memory.append(deepcopy(self.__model))
         self.modelChanged.emit(self.__model)
 
     @pyqtSlot()
@@ -122,7 +118,7 @@ class RobotModel(QObject):
         self.__model.score += 50
         self.__model.curColor = Colors.GREEN
         self.__model.tmpColor = Colors.WHITE
-        self.__memory.append(self.__model)
+        self.__memory.append(deepcopy(self.__model))
         self.modelChanged.emit(self.__model)
 
     @pyqtSlot(bool)

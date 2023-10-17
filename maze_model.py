@@ -24,7 +24,6 @@ class Model:
 class MazeModel(QObject):
     # signals
     modelChanged = pyqtSignal(Model)
-    dot_size_changed = pyqtSignal(int)
 
     def __init__(self, parent=None):
         super().__init__(parent)
