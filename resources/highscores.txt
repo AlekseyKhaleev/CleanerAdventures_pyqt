@@ -16,5 +16,3 @@ Robot 3
 3
 Robot 2
 2
-asdfg
-2
