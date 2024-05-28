@@ -1,12 +1,12 @@
+import random
 from copy import deepcopy
 
 from PyQt6.QtCore import pyqtSignal, pyqtSlot, QPoint, QObject, Qt, QTimer, QTime
 
-import random
-import highscores_widget
-from maze_model import Model as MModel
-from menu_widget import Menu
-from robot_model import Colors, States, Directions,  Model as RModel
+from source.menu import highscores_widget
+from source.menu.menu_widget import Menu
+from source.mvc.maze_model import Model as MModel
+from source.mvc.robot_model import Colors, States, Directions, Model as RModel
 
 
 class Controller(QObject):
@@ -71,12 +71,12 @@ class Controller(QObject):
 
     @pyqtSlot()
     def write_highscore(self):
-        with open("resources/highscores.txt", "r") as HSFile:
+        with open("../../resources/highscores.txt", "r") as HSFile:
             data = [line.replace("\n", "") for line in HSFile.readlines()]
             old_lines = [highscores_widget.Line(n, s) for n, s in zip(data[::2], map(int, data[1::2]))]
             old_lines.append(highscores_widget.Line(self.__robot_model.name, self.__robot_model.score))
             old_lines.sort(key=lambda l: -l.SCORE)
-        with open("resources/highscores.txt", "w") as HSFile:
+        with open("../../resources/highscores.txt", "w") as HSFile:
             HSFile.writelines([line.NAME + "\n" + str(line.SCORE) + "\n" for line in old_lines[:9]])
 
     # public

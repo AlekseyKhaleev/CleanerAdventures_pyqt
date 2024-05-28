@@ -1,13 +1,14 @@
+from functools import partial
+
 from PyQt6.QtCore import pyqtSlot, QObject, QCoreApplication
 from PyQt6.QtWidgets import QWidget, QStackedLayout
 
-from about_widget import AboutWidget
-from auth_widget import AuthWidget
-from controls_widget import ControlsWidget
-from game_widget import GameWidget
-from highscores_widget import HighscoresWidget
-from menu_widget import Menu, MenuWidget
-from functools import partial
+from source.game.game_widget import GameWidget
+from source.menu.about_widget import AboutWidget
+from source.menu.auth_widget import AuthWidget
+from source.menu.controls_widget import ControlsWidget
+from source.menu.highscores_widget import HighscoresWidget
+from source.menu.menu_widget import Menu, MenuWidget
 
 
 class MainWidget(QWidget):

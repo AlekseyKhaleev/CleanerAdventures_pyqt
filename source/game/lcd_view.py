@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import QLCDNumber
 
-from maze_model import Model as MModel
-from robot_model import Model as RModel
+from source.mvc.maze_model import Model as MModel
+from source.mvc.robot_model import Model as RModel
 
 
 class LCDView(QLCDNumber):
@@ -23,7 +23,6 @@ class LCDView(QLCDNumber):
         elif type(model) is RModel:
             self.setDigitCount(len(str(model.score)))
             self.display(model.score)
-
 
     # @staticmethod
     # def get_range(value):

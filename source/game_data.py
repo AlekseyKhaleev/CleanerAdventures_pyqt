@@ -13,4 +13,3 @@ class GameData:
             GameData.DOT_SIZE = 10
         else:
             GameData.DOT_SIZE = GameData.DOT_SIZE - 2
-

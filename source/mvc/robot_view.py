@@ -2,8 +2,8 @@ from PyQt6.QtCore import QRect, pyqtSignal, Qt
 from PyQt6.QtGui import QImage, QPainter, QColor
 from PyQt6.QtWidgets import QWidget
 
-from robot_model import Model as RModel
-from game_data import GameData
+from source.mvc.robot_model import Model as RModel
+from source.game_data import GameData
 
 
 class RobotView(QWidget):
@@ -17,7 +17,7 @@ class RobotView(QWidget):
             [QImage(f"resources/images/VC_{col}_{dest}.png") for dest in ["lt", "rt", "up", "dn"]] for col in
             ["wt", "gr", "yw", "rd"]]
         self.__robot_skin = (self.__white, self.__green, self.__yellow, self.__red)
-        self._clean_image = QImage("resources/images/milky_way.png")
+        self._clean_image = QImage("../../resources/images/milky_way.png")
 
     def paintEvent(self, event):
         self.clean()

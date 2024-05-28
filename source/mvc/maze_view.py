@@ -2,8 +2,8 @@ from PyQt6.QtCore import QRect
 from PyQt6.QtGui import QImage, QPainter
 from PyQt6.QtWidgets import QWidget, QStyleOption, QStyle
 
-from game_data import GameData
-from maze_model import Model as MModel
+from source.mvc.maze_model import Model as MModel
+from source.game_data import GameData
 
 
 class MazeView(QWidget):

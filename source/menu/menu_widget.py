@@ -1,6 +1,7 @@
-from PyQt6.QtWidgets import QPushButton, QWidget, QLabel, QGridLayout
-from PyQt6.QtCore import Qt, pyqtSignal
 from dataclasses import dataclass
+
+from PyQt6.QtCore import Qt, pyqtSignal
+from PyQt6.QtWidgets import QPushButton, QWidget, QLabel, QGridLayout
 
 
 @dataclass(frozen=True)

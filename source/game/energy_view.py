@@ -1,7 +1,8 @@
+from dataclasses import dataclass
+
 from PyQt6.QtCore import QRect, pyqtSlot
 from PyQt6.QtGui import QImage, QPainter
 from PyQt6.QtWidgets import QWidget, QSizePolicy
-from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
@@ -16,7 +17,6 @@ class Energy:
 
 
 class EnergyView(QWidget):
-
     __enStatusImgs = [QImage(f"resources/images/en_{perc}") for perc in (0, 10, 30, 50, 70, 80, 90)]
 
     def __init__(self, parent=None):
@@ -35,7 +35,6 @@ class EnergyView(QWidget):
         qp = QPainter(self)
         qp.drawImage(QRect(int(self.width() / 2 - self.width() * 0.3), 0, int(self.width() * 0.6), self.height()),
                      self.__enStatusImgs[self.__enStatus])
-
 
     @pyqtSlot(int)
     def update_model(self, perc_energy):

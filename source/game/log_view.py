@@ -2,8 +2,9 @@ import copy
 
 from PyQt6.QtCore import Qt, QTime
 from PyQt6.QtWidgets import QListWidget, QSizePolicy, QVBoxLayout
-from robot_model import Model, States
-from robot_view import RobotView
+
+from source.mvc.robot_model import Model, States
+from source.mvc.robot_view import RobotView
 
 
 class LogView(RobotView):

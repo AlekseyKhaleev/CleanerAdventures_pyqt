@@ -1,10 +1,9 @@
-from PyQt6.QtWidgets import QApplication
-from PyQt6.QtCore import Qt
-
-from main_widget import MainWidget
-
 import sys
 
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QApplication
+
+from source.main_widget import MainWidget
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 
-from PyQt6.QtCore import pyqtSignal, Qt, QFile, QIODevice
+from PyQt6.QtCore import pyqtSignal, Qt
 from PyQt6.QtWidgets import QWidget, QGridLayout, QLabel, QSizePolicy
 
-from menu_widget import Menu
+from source.menu.menu_widget import Menu
 
 
 @dataclass
@@ -36,7 +36,7 @@ class HighscoresWidget(QWidget):
         super().__init__(parent)
         self.__LayLines = [] if self.__LayLines is None else ...
         self.__FileLines = [] if self.__FileLines is None else ...
-        self.__HS_file_path = "resources/highscores.txt"
+        self.__HS_file_path = "../../resources/highscores.txt"
         self.__layout = QGridLayout()
         self.setLayout(self.__layout)
 

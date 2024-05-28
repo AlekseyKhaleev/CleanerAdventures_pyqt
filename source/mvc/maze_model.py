@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 from PyQt6.QtCore import pyqtSignal, pyqtSlot, QPoint, QObject, QTime
 from PyQt6.QtGui import QGuiApplication
 
-from game_data import GameData
+from source.game_data import GameData
 
 
 @dataclass
@@ -65,7 +65,6 @@ class MazeModel(QObject):
     def reset_level(self, success: bool):
         if not success:
             self.__model.level = 0
-
 
     @pyqtSlot()
     def get_model(self):
@@ -143,7 +142,7 @@ class MazeModel(QObject):
             else:
                 break
         self.__model.maxEnergy += len(way)
-        for i in range(1, len(way)-1):
+        for i in range(1, len(way) - 1):
             if (way[i - 1].x() == way[i].x() and way[i + 1].y() == way[i].y()) or (
                     way[i - 1].y() == way[i].y() and way[i + 1].x() == way[i].x()):
                 self.__model.maxEnergy += 1

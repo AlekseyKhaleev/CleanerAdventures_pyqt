@@ -1,7 +1,8 @@
-from dataclasses import dataclass, field
-from PyQt6.QtCore import pyqtSignal, pyqtSlot, QPoint, QObject
 from collections import deque
 from copy import deepcopy
+from dataclasses import dataclass
+
+from PyQt6.QtCore import pyqtSignal, pyqtSlot, QPoint, QObject
 
 
 @dataclass(frozen=True)

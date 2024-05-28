@@ -46,4 +46,3 @@ class GameOverView(QMessageBox):
                              "QPushButton:focus { font: bold; border: 10px solid white; border-radius: 20px;"
                              "outline-radius: 20px; font-size: 18px }")
         return button
-
