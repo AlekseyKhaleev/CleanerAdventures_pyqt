@@ -17,15 +17,18 @@ class AboutWidget(QWidget):
         about_label = QLabel()
         about_label.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop)
         about_label.setStyleSheet("QLabel { font: bold; font-size: 32px }")
-        about_label.setText("Qt 6.4/C++ open source project\n"
-                            "created by Aleksey Khaleev 27.12.2022\n\n\n"
-                            "NIZHNY NOVGOROD STATE TECHNICAL UNIVERSITY\n"
-                            "Institute of Radioelectronics and Information Technologies\n"
-                            "Department of Informatics and Control Systems\n\n"
-                            "Programming course work\n\n"
-                            "\"Modelling the operation of a finite state machine\"\n\n"
-                            "version 1.0\n\n\n"
-                            "https://github.com/AlekseyKhaleev/CleanerAdventures.git")
+        about_label.setText(
+            "Python/PyQt open source project\n"
+            "created by Aleksey Khaleev\n\n"
+            "CleanerAdventures: A game about a robotic vacuum cleaner's adventures in dynamically generated mazes.\n\n"
+            "Features:\n"
+            "- Dynamically generated mazes with increasing complexity.\n"
+            "- Multiple paths to solve mazes.\n"
+            "- Energy restoration mechanics.\n\n"
+            "Version 1.0\n\n"
+            "GitHub Repository: https://github.com/AlekseyKhaleev/CleanerAdventures_pyqt.git"
+        )
+
         layout.addWidget(title, 0, 0, 1, 1)
         layout.addWidget(about_label, 1, 0, 4, 1)
         self.setLayout(layout)
