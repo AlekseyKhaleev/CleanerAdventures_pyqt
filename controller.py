@@ -36,8 +36,8 @@ class Controller(QObject):
                 if self.__robot_model.robotDestination != Directions.LEFT:
                     self.robot_rotated.emit(Directions.LEFT, self.__check_energy())
             case Qt.Key.Key_Right:
-                if self.__robot_model.robotDestination != Directions.LEFT:
-                    self.robot_rotated.emit(Directions.LEFT, self.__check_energy())
+                if self.__robot_model.robotDestination != Directions.RIGHT:
+                    self.robot_rotated.emit(Directions.RIGHT, self.__check_energy())
             case Qt.Key.Key_Up:
                 if self.__robot_model.robotDestination != Directions.UP:
                     self.robot_rotated.emit(Directions.UP, self.__check_energy())
@@ -46,6 +46,8 @@ class Controller(QObject):
                     self.robot_rotated.emit(Directions.DOWN, self.__check_energy())
             case Qt.Key.Key_Space:
                 self.__move_robot()
+            case Qt.Key.Key_Backspace:
+                self.step_back.emit()
             case Qt.Key.Key_Escape:
                 self.return_clicked.emit(Menu.RETURN)
             case _:
@@ -79,7 +81,7 @@ class Controller(QObject):
 
     # public
     def __init__(self, robot_model: RModel, maze_model: MModel, parent=None):
-        QObject.__init__(self, parent)
+        super().__init__(parent)
         self.__robot_model = deepcopy(robot_model)
         self.__maze_model = deepcopy(maze_model)
         self.__score_increase = True
@@ -95,7 +97,7 @@ class Controller(QObject):
         return ((self.__maze_model.maxEnergy - self.__robot_model.steps) * 100) // self.__maze_model.maxEnergy
 
     def __update_score(self):
-        if self.scoreIncrease:
+        if self.__score_increase:
             return self.__robot_model.score + 1
         elif self.__robot_model.score:
             return self.__robot_model.score - 1
@@ -104,13 +106,13 @@ class Controller(QObject):
 
     def __check_battery(self):
         if self.__robot_model.robotPosition in self.__maze_model.batteries:
-            self.scoreIncrease = False
+            self.__score_increase = False
             self.batteryFound.emit(self.__robot_model.robotPosition)
             self.energyChanged.emit(self.__get_percent_energy())
 
     def __check_target(self):
         if self.__robot_model.robotPosition == self.__maze_model.targetPosition:
-            self.scoreIncrease = True
+            self.__score_increase = True
             self.levelDone.emit(True)
 
     def __locate_battery(self):
@@ -122,7 +124,7 @@ class Controller(QObject):
         self.batteryLocated.emit(battery)
 
     def __move_robot(self):
-        tar_pos = deepcopy(self.__robot_model.robotPosition)
+        tar_pos = QPoint(self.__robot_model.robotPosition)
         match self.__robot_model.robotDestination:
             case Directions.LEFT:
                 tar_pos.setX(tar_pos.x() - 1)
@@ -133,11 +135,11 @@ class Controller(QObject):
                 if self.__check_wall(tar_pos):
                     self.robot_moved.emit(tar_pos, self.__update_score(), self.__check_energy())
             case Directions.UP:
-                tar_pos.setX(tar_pos.y() - 1)
+                tar_pos.setY(tar_pos.y() - 1)
                 if self.__check_wall(tar_pos):
                     self.robot_moved.emit(tar_pos, self.__update_score(), self.__check_energy())
             case Directions.DOWN:
-                tar_pos.setX(tar_pos.y() + 1)
+                tar_pos.setY(tar_pos.y() + 1)
                 if self.__check_wall(tar_pos):
                     self.robot_moved.emit(tar_pos, self.__update_score(), self.__check_energy())
             case _:

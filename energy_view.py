@@ -17,10 +17,10 @@ class Energy:
 
 class EnergyView(QWidget):
 
-    __enStatusImgs = [QImage(f":/images/en_{perc}") for perc in (0, 10, 30, 50, 70, 80, 90)]
+    __enStatusImgs = [QImage(f"resources/images/en_{perc}") for perc in (0, 10, 30, 50, 70, 80, 90)]
 
     def __init__(self, parent=None):
-        QWidget.__init__(self, parent)
+        super().__init__(parent)
         self.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Ignored)
         self.__enStatus = Energy.en_90
         self.repaint()
@@ -33,8 +33,9 @@ class EnergyView(QWidget):
     @pyqtSlot()
     def __draw_status(self):
         qp = QPainter(self)
-        qp.drawImage(QRect(self.width() / 2 - self.width() * 0.3, 0, self.width() * 0.6, self.height()),
+        qp.drawImage(QRect(int(self.width() / 2 - self.width() * 0.3), 0, int(self.width() * 0.6), self.height()),
                      self.__enStatusImgs[self.__enStatus])
+
 
     @pyqtSlot(int)
     def update_model(self, perc_energy):

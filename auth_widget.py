@@ -7,7 +7,7 @@ class AuthWidget(QWidget):
     nameChanged = pyqtSignal(str)
 
     def __init__(self, parent=None):
-        QWidget.__init__(self, parent)
+        super().__init__(parent)
         self.__layout = QVBoxLayout()
         self.__auth = QLineEdit()
         self.__auth.returnPressed.connect(self.__change_name)

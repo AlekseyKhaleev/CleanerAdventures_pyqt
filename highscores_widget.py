@@ -33,7 +33,7 @@ class HighscoresWidget(QWidget):
     __FileLines, __LayLines = None, None
 
     def __init__(self, parent=None):
-        QWidget.__init__(self, parent)
+        super().__init__(parent)
         self.__LayLines = [] if self.__LayLines is None else ...
         self.__FileLines = [] if self.__FileLines is None else ...
         self.__HS_file_path = "resources/highscores.txt"

@@ -24,7 +24,7 @@ class MenuWidget(QWidget):
     exitClicked = pyqtSignal([bool], [int])
 
     def __init__(self, parent=None):
-        QWidget.__init__(self, parent)
+        super().__init__(parent)
         self.__newGame, self.__controls, self.__highscores, self.__about, self.__exit = \
             [self.create_button(t) for t in ["New Game", "Control keys", "Highscores", "About", "Exit"]]
         self.__newGame.clicked.connect(self.newGameClicked)

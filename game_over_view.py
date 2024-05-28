@@ -8,7 +8,7 @@ class GameOverView(QMessageBox):
     gameEnded = pyqtSignal()
 
     def __init__(self, parent=None):
-        QMessageBox.__init__(self, parent)
+        super().__init__(parent)
         self.__accept = self.createButton("")
         self.__exit = self.createButton("I'LL BE BACK")
         self.setStyleSheet(
@@ -23,19 +23,20 @@ class GameOverView(QMessageBox):
         if success:
             self.__accept.setText("GO NEXT!")
             self.setText("<p align='center'>Level done, great! </p>")
+            self.setInformativeText("<p align=center>Go next?</p>")
         else:
             self.__accept.setText("TRY AGAIN!")
             self.setText("<p align='center'>Ohh no! You lose!</p>")
-        self.setInformativeText("<p align=center>Wanna try again?</p>")
+            self.setInformativeText("<p align=center>Wanna try again?</p>")
         self.addButton(self.__exit, QMessageBox.ButtonRole.RejectRole)
         self.addButton(self.__accept, QMessageBox.ButtonRole.AcceptRole)
         self.__accept.setDefault(True)
 
         self.exec()
         if self.clickedButton() != self.__accept:
-            self.gameEnded().emit()
+            self.gameEnded.emit()
         else:
-            self.gameStarted().emit()
+            self.gameStarted.emit()
 
     @staticmethod
     def createButton(text):

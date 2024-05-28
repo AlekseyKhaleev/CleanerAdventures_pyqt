@@ -8,15 +8,14 @@ class ControlsWidget(QWidget):
     returnClicked = pyqtSignal(int)
 
     def __init__(self, parent=None):
-        QWidget.__init__(self, parent)
+        super().__init__(parent)
         layout, title = QGridLayout(), QLabel("Control keys:")
         title.setStyleSheet("QLabel { font: bold solid black; font-size: 72px; }")
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
+        layout.addWidget(title, 0, 0, 1, 6)
         [layout.addWidget(self.create_label(t), *pos) for t, pos in zip(
-            [title, "Rotate robot: ", "Arrows", "Move robot: ", "Space", "Step Undo: ", "Backspace", "Menu / Return :",
-             "ESC"],
-            [(0, 0, 1, 6)] + [(x, y, 1, 1) for x in (1, 2, 3, 4) for y in (2, 3)])]
+            ["Rotate robot: ", "Arrows", "Move robot: ", "Space", "Step Undo: ", "Backspace", "Menu / Return :",
+             "ESC"], [(x, y, 1, 1) for x in (1, 2, 3, 4) for y in (2, 3)])]
         self.setLayout(layout)
 
     @staticmethod
